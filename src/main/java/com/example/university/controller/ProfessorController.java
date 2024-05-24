@@ -19,12 +19,12 @@ public class ProfessorController {
         return professorJpaService.getProfessors();
     }
 
-    @GetMapping("/professors/{professorId}") 
-    public Professor getProfessorById(@PathVariable("professorId") int professorId) {
-        return professorJpaService.getProfessorById(professorId);
+     @GetMapping("/professors/{professorId}/courses")
+    public List<Course> getProfessorCourses(@PathVariable("professorId") int professorId){
+        return professorJpaService.getProfessorCourses(professorId);
     }
-
-    @GetMapping("/professors/{professorId}") 
+    
+    @GetMapping("/professors/{professorId}")
     public Professor getProfessorById(@PathVariable("professorId") int professorId) {
         return professorJpaService.getProfessorById(professorId);
     }

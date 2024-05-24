@@ -6,6 +6,7 @@ import java.util.List;
 import com.example.university.model.*;
 
 import com.example.university.repository.ProfessorJpaRepository;
+import com.example.university.repository.CourseJpaRepository;
 import com.example.university.repository.ProfessorRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,11 @@ public class ProfessorJpaService implements ProfessorRepository {
 
     @Autowired
     private ProfessorJpaRepository professorJpaRepository;
+
+    @Autowired
+    private CourseJpaRepository courseJpaRepository;
+
+
 
     @Override
     public ArrayList<Professor> getProfessors() {
@@ -70,8 +76,12 @@ public class ProfessorJpaService implements ProfessorRepository {
     }
 
     @Override
-    public Course getProfessorCourse(int professorId) {
-        // TODO Auto-generated method stub
-        return null;
+    public List<Course> getProfessorCourses(int professorId) {
+        try {
+            Professor professor = professorJpaRepository.findById(professorId).get();
+            return courseJpaRepository.findByProfessor(professor);
+        } catch (Exception e) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "professorId " + professorId + " not found");
+        }
     }
 }
